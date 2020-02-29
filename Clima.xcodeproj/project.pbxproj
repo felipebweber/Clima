@@ -17,6 +17,8 @@
 		553443152409A585002BDE90 /* ClimaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553443142409A585002BDE90 /* ClimaTests.swift */; };
 		553443202409A585002BDE90 /* ClimaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534431F2409A585002BDE90 /* ClimaUITests.swift */; };
 		5534432E2409A801002BDE90 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5534432D2409A801002BDE90 /* README.md */; };
+		553443342409E629002BDE90 /* dark_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 553443322409E629002BDE90 /* dark_background.pdf */; };
+		553443352409E629002BDE90 /* light_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 553443332409E629002BDE90 /* light_background.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		5534431F2409A585002BDE90 /* ClimaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimaUITests.swift; sourceTree = "<group>"; };
 		553443212409A585002BDE90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5534432D2409A801002BDE90 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		553443322409E629002BDE90 /* dark_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = dark_background.pdf; path = Clima/dark_background.pdf; sourceTree = SOURCE_ROOT; };
+		553443332409E629002BDE90 /* light_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = light_background.pdf; path = Clima/light_background.pdf; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,8 @@
 			children = (
 				5534431F2409A585002BDE90 /* ClimaUITests.swift */,
 				553443212409A585002BDE90 /* Info.plist */,
+				553443322409E629002BDE90 /* dark_background.pdf */,
+				553443332409E629002BDE90 /* light_background.pdf */,
 			);
 			path = ClimaUITests;
 			sourceTree = "<group>";
@@ -262,10 +268,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553443342409E629002BDE90 /* dark_background.pdf in Resources */,
 				5534430A2409A585002BDE90 /* LaunchScreen.storyboard in Resources */,
 				553443072409A585002BDE90 /* Assets.xcassets in Resources */,
 				5534432E2409A801002BDE90 /* README.md in Resources */,
 				553443022409A583002BDE90 /* Main.storyboard in Resources */,
+				553443352409E629002BDE90 /* light_background.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
