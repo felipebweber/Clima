@@ -50,6 +50,9 @@
                                                 </constraints>
                                                 <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <state key="normal" backgroundImage="magnifyingglass" catalog="system"/>
+                                                <connections>
+                                                    <action selector="searchPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="67M-0y-QhP"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -113,6 +116,7 @@
                     <connections>
                         <outlet property="cityLabel" destination="wiV-sT-ji2" id="hAh-lO-oN4"/>
                         <outlet property="conditionImageView" destination="ruI-3r-bbZ" id="squ-AU-lU2"/>
+                        <outlet property="searchTextField" destination="4vA-om-bqy" id="IR3-Lm-Zbc"/>
                         <outlet property="temperatureLabel" destination="2un-Ve-bLC" id="6eR-3z-s8B"/>
                     </connections>
                 </viewController>
