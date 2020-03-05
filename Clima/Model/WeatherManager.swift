@@ -14,9 +14,9 @@ struct WeatherManager {
     func fetchWeather(cityName: String){
         // essa linha eh para quando for fazer buscas com nome composto de cidade fazer a concatenacao de %20
         if let cityEncoded = cityName.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted){
-//            print(cityEncoded)
+            //            print(cityEncoded)
             let urlString = "\(weatherURL)&q=\(cityEncoded)"
-//            print(urlString)
+            //            print(urlString)
             performRequest(urlString: urlString)
         }
     }
@@ -24,31 +24,50 @@ struct WeatherManager {
     //perform = executar
     func performRequest(urlString: String){
         //1. create a URL
-//        print(urlString)
+        //        print(urlString)
         
         
         
         if let url = URL(string: urlString){
-//            print(url)
+            //            print(url)
             //2. create a URLSession
             let session = URLSession(configuration: .default)
             //3. give the session a task
-            let task = session.dataTask(with: url, completionHandler: handle(data:response:error:))
+            
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if error != nil{
+                    print(error!)
+                    return
+                }
+                
+                if let safeData = data{
+//                    let dataString = String(data: safeData, encoding: .utf8)
+//                    print(dataString)
+                    self.parseJSON(weatherData: safeData)
+                }
+            }
             //4. start the task
             task.resume()
         }
-       
     }
     
-    func handle(data: Data?, response: URLResponse?, error: Error?){
-        if error != nil{
-            print(error!)
-            return
-        }
-        
-        if let safeData = data{
-            let dataString = String(data: safeData, encoding: .utf8)
-            print(dataString)
+    func parseJSON( weatherData: Data){
+        let decoder = JSONDecoder()
+        do {
+            let decodeData = try decoder.decode(WeatherData.self, from: weatherData)
+            let name = decodeData.name
+            let temp = decodeData.main.temp
+            let id = decodeData.weather[0].id
+            print(decodeData.weather[0].description)
+            
+            let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp)
+            print(weather)
+            print(weather.conditionName)
+            print(weather.temperatureString)
+        } catch {
+            print(error)
         }
     }
+    
+    
 }
