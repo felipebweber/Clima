@@ -9,6 +9,7 @@
 import UIKit
 
 class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
+    
 
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -54,9 +55,17 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     }
     
     
-    func didUpdateWeather(weather: WeatherModel){
-        print(weather.temperature)
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel){
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.cityLabel.text = weather.cityName
+            self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+        }
     }
+    
+    func didFailWithError(erro: Error) {
+           print(erro)
+       }
 
 }
 

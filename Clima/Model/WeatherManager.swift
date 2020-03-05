@@ -9,7 +9,8 @@
 import Foundation
 
 protocol WeatherManagerDelegate {
-    func didUpdateWeather(weather: WeatherModel)
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel)
+    func didFailWithError(erro: Error)
 }
 
 struct WeatherManager {
@@ -23,12 +24,12 @@ struct WeatherManager {
             //            print(cityEncoded)
             let urlString = "\(weatherURL)&q=\(cityEncoded)"
             //            print(urlString)
-            performRequest(urlString: urlString)
+            performRequest(with: urlString)
         }
     }
     
     //perform = executar
-    func performRequest(urlString: String){
+    func performRequest(with urlString: String){
         //1. create a URL
         //        print(urlString)
         if let url = URL(string: urlString){
@@ -39,16 +40,17 @@ struct WeatherManager {
             let task = session.dataTask(with: url) { (data, response, error) in
                 if error != nil{
                     print(error!)
+                    self.delegate?.didFailWithError(erro: error!)
                     return
                 }
                 
                 if let safeData = data{
 //                    let dataString = String(data: safeData, encoding: .utf8)
 //                    print(dataString)
-                    if let weather = self.parseJSON(weatherData: safeData){
+                    if let weather = self.parseJSON(safeData){
 //                        let weatherVC = WeatherViewController()
 //                        weatherVC.didUpdateWeather(weather: weather)
-                        self.delegate?.didUpdateWeather(weather: weather)
+                        self.delegate?.didUpdateWeather(self, weather: weather)
                     }
                 }
             }
@@ -57,7 +59,7 @@ struct WeatherManager {
         }
     }
     
-    func parseJSON( weatherData: Data) -> WeatherModel?{
+    func parseJSON(_ weatherData: Data) -> WeatherModel?{
         let decoder = JSONDecoder()
         do {
             let decodeData = try decoder.decode(WeatherData.self, from: weatherData)
@@ -70,11 +72,11 @@ struct WeatherManager {
             print(weather)
             print(weather.conditionName)
             print(weather.temperatureString)
+            return weather
         } catch {
-            print(error)
+            delegate?.didFailWithError(erro: error)
             return nil
         }
-        return nil
     }
     
     
