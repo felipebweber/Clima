@@ -22,6 +22,7 @@
 		5534432E2409A801002BDE90 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5534432D2409A801002BDE90 /* README.md */; };
 		553443342409E629002BDE90 /* dark_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 553443322409E629002BDE90 /* dark_background.pdf */; };
 		553443352409E629002BDE90 /* light_background.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 553443332409E629002BDE90 /* light_background.pdf */; };
+		55E008E4243E109B0078C375 /* WeatherHourCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E008E3243E109B0078C375 /* WeatherHourCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5534432D2409A801002BDE90 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		553443322409E629002BDE90 /* dark_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = dark_background.pdf; path = Clima/dark_background.pdf; sourceTree = SOURCE_ROOT; };
 		553443332409E629002BDE90 /* light_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = light_background.pdf; path = Clima/light_background.pdf; sourceTree = SOURCE_ROOT; };
+		55E008E3243E109B0078C375 /* WeatherHourCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHourCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				553442FE2409A583002BDE90 /* WeatherViewController.swift */,
+				55E008E3243E109B0078C375 /* WeatherHourCollectionViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				553443052409A583002BDE90 /* Clima.xcdatamodeld in Sources */,
 				553442FF2409A583002BDE90 /* WeatherViewController.swift in Sources */,
 				551CE500240F1C9B008F451F /* WeatherManager.swift in Sources */,
+				55E008E4243E109B0078C375 /* WeatherHourCollectionViewCell.swift in Sources */,
 				550BD30724107B8E005384F4 /* WeatherModel.swift in Sources */,
 				553442FB2409A583002BDE90 /* AppDelegate.swift in Sources */,
 				550BD3052410639C005384F4 /* WeatherData.swift in Sources */,

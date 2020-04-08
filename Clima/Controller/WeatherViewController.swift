@@ -17,6 +17,9 @@ class WeatherViewController: UIViewController{
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
     
+    @IBOutlet weak var collectionViewWeatherHour: UICollectionView!
+    
+    
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     
@@ -29,6 +32,8 @@ class WeatherViewController: UIViewController{
         
         searchTextField.delegate = self
         weatherManager.delegate = self
+        collectionViewWeatherHour.delegate = self
+        collectionViewWeatherHour.dataSource = self
     }
     
     
@@ -105,4 +110,23 @@ extension WeatherViewController: WeatherManagerDelegate{
     func didFailWithError(erro: Error) {
            print(erro)
        }
+}
+
+
+extension WeatherViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherHourCollectionViewCell
+        cell.imageViewWeatherHour.image = UIImage(systemName: "sun.max")
+        return cell
+    }
+}
+
+extension WeatherViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let widthCell = collectionView.bounds.width / 7
+        return CGSize(width: widthCell, height: 100)
+    }
 }
