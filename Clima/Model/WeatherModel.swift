@@ -6,6 +6,8 @@
 //  Copyright © 2020 Felipe Weber. All rights reserved.
 //
 
+// https://openweathermap.org/weather-conditions
+
 import Foundation
 
 struct WeatherModel {
@@ -23,14 +25,14 @@ struct WeatherModel {
             return "could.bolt"
         case 300...301:
             return "clod.drizzle"
-        case 500...521:
+        case 500...531:
             return "cloud.rain"
-        case 600...602:
-            return "701...781"
+        case 600...622:
+            return "cloud.snow"
         case 701...781:
             return "cloud.fog"
         case 800:
-            return "sun.max" //Errado
+            return "sun.max"
         case 801...804:
             return "cloud.bolt"
         default:
