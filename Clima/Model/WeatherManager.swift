@@ -9,15 +9,15 @@
 import Foundation
 import CoreLocation
 
-protocol WeatherManagerDelegate {
+protocol WeatherManagerDelegate: class {
     func didUpdateWeather(weather: WeatherModel)
     func didFailWithError(erro: Error)
 }
 
-class WeatherManager {
+final class WeatherManager {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=dc05b8287f28b9113a9f84641e77bff5&units=metric"
     
-    var delegate: WeatherManagerDelegate?
+    weak var delegate: WeatherManagerDelegate?
     
     func fetchWeather(cityName: String){
         // essa linha eh para quando for fazer buscas com nome composto de cidade fazer a concatenacao de %20
@@ -39,16 +39,16 @@ class WeatherManager {
         guard let url = URL(string: urlString) else { return }
         let session = URLSession(configuration: .default)
         //3. give the session a task
-        let task = session.dataTask(with: url) { (data, response, error) in
+        let task = session.dataTask(with: url) { [weak self] (data, _, error) in
             if error != nil{
                 print(error!)
-                self.delegate?.didFailWithError(erro: error!)
+                self?.delegate?.didFailWithError(erro: error!)
                 return
             }
             
             if let data = data {
-                if let weather = self.parseJSON(data){
-                    self.delegate?.didUpdateWeather(weather: weather)
+                if let weather = self?.parseJSON(data){
+                    self?.delegate?.didUpdateWeather(weather: weather)
                 }
             }
         }
