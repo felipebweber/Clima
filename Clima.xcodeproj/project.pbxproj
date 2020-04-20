@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		550BD3052410639C005384F4 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550BD3042410639C005384F4 /* WeatherData.swift */; };
+		550BD3052410639C005384F4 /* WeatherDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550BD3042410639C005384F4 /* WeatherDataResponse.swift */; };
 		550BD30724107B8E005384F4 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550BD30624107B8E005384F4 /* WeatherModel.swift */; };
 		551CE500240F1C9B008F451F /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 551CE4FF240F1C9B008F451F /* WeatherManager.swift */; };
 		553442FB2409A583002BDE90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553442FA2409A583002BDE90 /* AppDelegate.swift */; };
@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		550BD3042410639C005384F4 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		550BD3042410639C005384F4 /* WeatherDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataResponse.swift; sourceTree = "<group>"; };
 		550BD30624107B8E005384F4 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		551CE4FF240F1C9B008F451F /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		553442F72409A583002BDE90 /* Clima.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clima.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				551CE4FF240F1C9B008F451F /* WeatherManager.swift */,
-				550BD3042410639C005384F4 /* WeatherData.swift */,
+				550BD3042410639C005384F4 /* WeatherDataResponse.swift */,
 				550BD30624107B8E005384F4 /* WeatherModel.swift */,
 			);
 			path = Model;
@@ -316,7 +316,7 @@
 				55E008E4243E109B0078C375 /* WeatherHourCollectionViewCell.swift in Sources */,
 				550BD30724107B8E005384F4 /* WeatherModel.swift in Sources */,
 				553442FB2409A583002BDE90 /* AppDelegate.swift in Sources */,
-				550BD3052410639C005384F4 /* WeatherData.swift in Sources */,
+				550BD3052410639C005384F4 /* WeatherDataResponse.swift in Sources */,
 				553442FD2409A583002BDE90 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
