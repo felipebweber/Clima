@@ -98,7 +98,15 @@ extension WeatherViewController: UITextFieldDelegate{
 }
 
 //MARK: - WeatherManagerDelegate
-extension WeatherViewController: WeatherManagerDelegate{
+extension WeatherViewController: WeatherManagerDelegate {
+    func didUpdateDayWeather(weatherDay: [WeatherDayModel]) {
+        print("Lindo de mais")
+        print("Tamanho: \(weatherDay.count)")
+        print("ID: \(weatherDay[0].id)")
+        print("Temp Min: \(weatherDay[0].temp_min)")
+        print("Temp Max: \(weatherDay[0].temp_max)")
+    }
+    
     func didUpdateWeather(weather: WeatherModel){
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
