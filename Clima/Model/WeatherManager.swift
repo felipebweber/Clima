@@ -25,26 +25,25 @@ final class WeatherManager {
     func fetchWeather(cityName: String){
         // essa linha eh para quando for fazer buscas com nome composto de cidade fazer a concatenacao de %20
         if let cityEncoded = cityName.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted){
-            //            print(cityEncoded)
             let urlString = "\(weatherURL)&q=\(cityEncoded)"
             print(urlString)
             performRequest(with: urlString)
-            fetchWeather()
+            fetchWeatherDay()
         }
     }
     
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: urlString)
-//        fetchWeather()
+        fetchWeatherDay()
     }
     
-    func fetchWeather() {
-        performRequest(with: weatherURLDays, teste: "O meu deus")
+    func fetchWeatherDay() {
+        performRequestDay(with: weatherURLDays)
     }
     
     //perform = executar
-    func performRequest(with urlString: String, teste: String) {
+    func performRequestDay(with urlString: String) {
         guard let url = URL(string: urlString) else { return }
         print(url)
         let session = URLSession(configuration: .default)
@@ -94,7 +93,7 @@ final class WeatherManager {
         if let decodeData = try? decoder.decode(WeatherDayDataResponse.self, from: weatherData) {
 
             for dd in decodeData.list {
-                let app = WeatherDayModel(id: dd.weather[0].id, temp_min: Int(dd.main.temp_min), temp_max: Int(dd.main.temp_max))
+                let app = WeatherDayModel(id: dd.weather[0].id, temp_min: Int(dd.main.temp_min), temp_max: Int(dd.main.temp_max), cityName: decodeData.city.name)
                 weatherDayModel.append(app)
             }
         }

@@ -22,6 +22,7 @@ class WeatherViewController: UIViewController{
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
+    var weatherDayModel = Array<WeatherDayModel>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +62,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
 }
 
-
-
-
 //MARK: - UITextFieldDelegate
 
 extension WeatherViewController: UITextFieldDelegate{
@@ -100,11 +98,15 @@ extension WeatherViewController: UITextFieldDelegate{
 //MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateDayWeather(weatherDay: [WeatherDayModel]) {
+        weatherDayModel = weatherDay
+        print("Tamanho weatherDayModel: \(weatherDayModel.count)")
         print("Lindo de mais")
         print("Tamanho: \(weatherDay.count)")
         print("ID: \(weatherDay[0].id)")
+        print("Cidade: \(weatherDay[0].cityName)")
         print("Temp Min: \(weatherDay[0].temp_min)")
         print("Temp Max: \(weatherDay[0].temp_max)")
+        //collectionViewWeatherHour.reloadData()
     }
     
     func didUpdateWeather(weather: WeatherModel){
@@ -123,8 +125,9 @@ extension WeatherViewController: WeatherManagerDelegate {
 
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 24
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherHourCollectionViewCell
         cell.imageViewWeatherHour.image = UIImage(systemName: "sun.max")
