@@ -55,8 +55,6 @@ final class WeatherManager {
                 return
             }
             if let data = data {
-                print("DATA :D DATA :D")
-                print(data)
                 if let weatherDayArray = self?.parseDayJSON(data) {
                     self?.delegate?.didUpdateDayWeather(weatherDay: weatherDayArray)
                 }
@@ -91,7 +89,6 @@ final class WeatherManager {
         let decoder = JSONDecoder()
         var weatherDayModel = [WeatherDayModel]()
         if let decodeData = try? decoder.decode(WeatherDayDataResponse.self, from: weatherData) {
-
             for dd in decodeData.list {
                 let app = WeatherDayModel(id: dd.weather[0].id, temp_min: Int(dd.main.temp_min), temp_max: Int(dd.main.temp_max), cityName: decodeData.city.name)
                 weatherDayModel.append(app)

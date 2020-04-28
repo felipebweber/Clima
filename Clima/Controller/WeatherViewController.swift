@@ -41,7 +41,9 @@ class WeatherViewController: UIViewController{
         locationManager.requestLocation()
     }
     
-    
+    func convertToCelsius(t: Int) -> Int{
+        return t - 273
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -125,10 +127,12 @@ extension WeatherViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherHourCollectionViewCell
-        cell.imageViewWeatherHour.image = UIImage(systemName: "sun.max")
-        print("Count: \(weatherDayModel.count)")
-        print("Teste indexPath: \(indexPath)")
-        cell.tempMax.text = "\(weatherDayModel[0].temp_max)"
+        let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
+        cell.imageViewWeatherHour.image = UIImage(systemName: conditionName)
+        let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
+        cell.tempMax.text = "\(tempMax)"
+        let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
+        cell.tempMin.text = "\(tempMin)"
         return cell
     }
 }

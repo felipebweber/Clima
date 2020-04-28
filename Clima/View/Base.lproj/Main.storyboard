@@ -166,6 +166,7 @@
                                                         <connections>
                                                             <outlet property="imageViewWeatherHour" destination="pqO-dK-FFP" id="tcK-kf-xhg"/>
                                                             <outlet property="tempMax" destination="fVJ-Zt-sog" id="Jlq-gG-ajr"/>
+                                                            <outlet property="tempMin" destination="BAx-aZ-czZ" id="4gN-y0-xs1"/>
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
