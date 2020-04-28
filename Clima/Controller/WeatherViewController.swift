@@ -19,7 +19,6 @@ class WeatherViewController: UIViewController{
     
     @IBOutlet weak var collectionViewWeatherHour: UICollectionView!
     
-    
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     var weatherDayModel = Array<WeatherDayModel>()
@@ -97,16 +96,12 @@ extension WeatherViewController: UITextFieldDelegate{
 
 //MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate {
+    
     func didUpdateDayWeather(weatherDay: [WeatherDayModel]) {
-        weatherDayModel = weatherDay
-        print("Tamanho weatherDayModel: \(weatherDayModel.count)")
-        print("Lindo de mais")
-        print("Tamanho: \(weatherDay.count)")
-        print("ID: \(weatherDay[0].id)")
-        print("Cidade: \(weatherDay[0].cityName)")
-        print("Temp Min: \(weatherDay[0].temp_min)")
-        print("Temp Max: \(weatherDay[0].temp_max)")
-        //collectionViewWeatherHour.reloadData()
+        DispatchQueue.main.async {
+            self.weatherDayModel = weatherDay
+            self.collectionViewWeatherHour.reloadData()
+        }
     }
     
     func didUpdateWeather(weather: WeatherModel){
@@ -125,12 +120,15 @@ extension WeatherViewController: WeatherManagerDelegate {
 
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 24
+        return weatherDayModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherHourCollectionViewCell
         cell.imageViewWeatherHour.image = UIImage(systemName: "sun.max")
+        print("Count: \(weatherDayModel.count)")
+        print("Teste indexPath: \(indexPath)")
+        cell.tempMax.text = "\(weatherDayModel[0].temp_max)"
         return cell
     }
 }
@@ -140,4 +138,8 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
         let widthCell = collectionView.bounds.width / 7
         return CGSize(width: widthCell, height: 100)
     }
+}
+
+extension WeatherViewController: UITableViewDelegate {
+    
 }

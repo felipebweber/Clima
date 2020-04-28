@@ -11,5 +11,6 @@ import UIKit
 class WeatherHourCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageViewWeatherHour: UIImageView!
+    @IBOutlet weak var tempMax: UILabel!
     
 }

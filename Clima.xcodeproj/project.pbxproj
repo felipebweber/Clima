@@ -125,7 +125,6 @@
 				5534432F2409A833002BDE90 /* Model */,
 				553443302409A83B002BDE90 /* View */,
 				553443312409A849002BDE90 /* Controller */,
-				553443002409A583002BDE90 /* Main.storyboard */,
 				553443062409A585002BDE90 /* Assets.xcassets */,
 				553443082409A585002BDE90 /* LaunchScreen.storyboard */,
 				5534430B2409A585002BDE90 /* Info.plist */,
@@ -169,6 +168,7 @@
 		553443302409A83B002BDE90 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				553443002409A583002BDE90 /* Main.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
