@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController{
+class WeatherViewController: UIViewController {
     
 
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -18,6 +18,11 @@ class WeatherViewController: UIViewController{
     @IBOutlet weak var searchTextField: UITextField!
     
     @IBOutlet weak var collectionViewWeatherHour: UICollectionView!
+    @IBOutlet weak var collectionViewWeatherDays: UICollectionView!
+    
+    let collectionViewHoursIdentifier = "collectionViewHours"
+    let collectionViewDaysIdentifier = "collectionViewDays"
+    
     
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
@@ -34,6 +39,9 @@ class WeatherViewController: UIViewController{
         weatherManager.delegate = self
         collectionViewWeatherHour.delegate = self
         collectionViewWeatherHour.dataSource = self
+        
+        collectionViewWeatherDays.delegate = self
+        collectionViewWeatherDays.dataSource = self
     }
     
     
@@ -103,6 +111,7 @@ extension WeatherViewController: WeatherManagerDelegate {
         DispatchQueue.main.async {
             self.weatherDayModel = weatherDay
             self.collectionViewWeatherHour.reloadData()
+            self.collectionViewWeatherDays.reloadData()
         }
     }
     
@@ -122,25 +131,41 @@ extension WeatherViewController: WeatherManagerDelegate {
 
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return weatherDayModel.count
+        if collectionView == collectionViewWeatherHour {
+            return weatherDayModel.count
+        } else {
+            return 4
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! WeatherHourCollectionViewCell
-        let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
-        cell.imageViewWeatherHour.image = UIImage(systemName: conditionName)
-        let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
-        cell.tempMax.text = "\(tempMax)"
-        let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
-        cell.tempMin.text = "\(tempMin)"
-        return cell
+        
+        if collectionView == collectionViewWeatherHour {
+            let cellHours = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: collectionViewHoursIdentifier, for: indexPath) as! WeatherHourCollectionViewCell
+            let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
+            cellHours.imageViewWeatherHour.image = UIImage(systemName: conditionName)
+            let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
+            cellHours.tempMax.text = "\(tempMax)"
+            let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
+            cellHours.tempMin.text = "\(tempMin)"
+            return cellHours
+        } else {
+            let cellDays = collectionViewWeatherDays.dequeueReusableCell(withReuseIdentifier: collectionViewDaysIdentifier, for: indexPath) as! WeatherDaysCollectionViewCell
+            cellDays.labelDay.text = "O meu deus"
+            return cellDays
+        }
     }
 }
 
 extension WeatherViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let widthCell = collectionView.bounds.width / 7
-        return CGSize(width: widthCell, height: 100)
+        if collectionView == collectionViewWeatherHour {
+            let widthCell = collectionView.bounds.width / 7
+            return CGSize(width: widthCell, height: 100)
+        } else {
+            let widthCell = collectionView.bounds.width
+            return CGSize(width: widthCell, height: 50)
+        }
     }
 }
 

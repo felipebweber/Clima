@@ -110,7 +110,7 @@
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="ptP-cV-ycB" customClass="WeatherHourCollectionViewCell" customModule="Clima" customModuleProvider="target">
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionViewHours" id="ptP-cV-ycB" customClass="WeatherHourCollectionViewCell" customModule="Clima" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="-14" width="128" height="128"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Lzr-x6-ldJ">
@@ -170,6 +170,10 @@
                                                         </connections>
                                                     </collectionViewCell>
                                                 </cells>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="ruQ-iT-eto"/>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="fmR-Mw-cLa"/>
+                                                </connections>
                                             </collectionView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -183,6 +187,80 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lQu-YF-qs0">
                                         <rect key="frame" x="0.0" y="386" width="335" height="235"/>
+                                        <subviews>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JG7-2t-sAU">
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="235"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fjM-qV-7q4">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="235"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SZg-zU-QS5">
+                                                            <size key="itemSize" width="280" height="128"/>
+                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        </collectionViewFlowLayout>
+                                                        <cells>
+                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="collectionViewDays" id="RCt-8k-uT9" customClass="WeatherDaysCollectionViewCell" customModule="Clima" customModuleProvider="target">
+                                                                <rect key="frame" x="7.5" y="0.0" width="320" height="128"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bNv-ht-Xei">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="128"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2a-MF-yuR">
+                                                                            <rect key="frame" x="8" y="40" width="42" height="21"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Xc-zm-cay">
+                                                                            <rect key="frame" x="71" y="19" width="82" height="62"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ElJ-cQ-9O4">
+                                                                            <rect key="frame" x="188" y="40" width="42" height="21"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ap-aF-aAk">
+                                                                            <rect key="frame" x="256" y="40" width="42" height="21"/>
+                                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </collectionViewCellContentView>
+                                                                <size key="customSize" width="320" height="128"/>
+                                                                <connections>
+                                                                    <outlet property="imageViewWeatherDay" destination="8Xc-zm-cay" id="ctD-73-lzf"/>
+                                                                    <outlet property="labelDay" destination="j2a-MF-yuR" id="n6O-Fa-sD1"/>
+                                                                    <outlet property="labelTempMax" destination="ElJ-cQ-9O4" id="y1k-vJ-Gk3"/>
+                                                                    <outlet property="labelTempMin" destination="0ap-aF-aAk" id="16z-1C-VhF"/>
+                                                                </connections>
+                                                            </collectionViewCell>
+                                                        </cells>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="8Tv-fk-hr0"/>
+                                                            <outlet property="delegate" destination="BYZ-38-t0r" id="sNR-s1-EDX"/>
+                                                        </connections>
+                                                    </collectionView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="nJZ-Dv-ptZ" firstAttribute="bottom" secondItem="fjM-qV-7q4" secondAttribute="bottom" id="EHi-jX-9gN"/>
+                                                    <constraint firstItem="fjM-qV-7q4" firstAttribute="top" secondItem="nJZ-Dv-ptZ" secondAttribute="top" id="KSo-V4-dj2"/>
+                                                    <constraint firstItem="fjM-qV-7q4" firstAttribute="trailing" secondItem="nJZ-Dv-ptZ" secondAttribute="trailing" id="L2e-IC-jnE"/>
+                                                    <constraint firstItem="fjM-qV-7q4" firstAttribute="leading" secondItem="nJZ-Dv-ptZ" secondAttribute="leading" id="QXC-Ib-Gbs"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="contentLayoutGuide" id="Qfp-Cw-jCg"/>
+                                                <viewLayoutGuide key="frameLayoutGuide" id="nJZ-Dv-ptZ"/>
+                                            </scrollView>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                 </subviews>
@@ -213,6 +291,7 @@
                     </view>
                     <connections>
                         <outlet property="cityLabel" destination="wiV-sT-ji2" id="hAh-lO-oN4"/>
+                        <outlet property="collectionViewWeatherDays" destination="fjM-qV-7q4" id="AyJ-JK-2oq"/>
                         <outlet property="collectionViewWeatherHour" destination="waQ-U5-Rbh" id="TM2-s6-lAf"/>
                         <outlet property="conditionImageView" destination="ruI-3r-bbZ" id="squ-AU-lU2"/>
                         <outlet property="searchTextField" destination="4vA-om-bqy" id="IR3-Lm-Zbc"/>
