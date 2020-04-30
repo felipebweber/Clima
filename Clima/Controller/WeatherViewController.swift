@@ -134,7 +134,7 @@ extension WeatherViewController: UICollectionViewDataSource {
         if collectionView == collectionViewWeatherHour {
             return weatherDayModel.count
         } else {
-            return 4
+            return 6
         }
     }
     
@@ -151,7 +151,7 @@ extension WeatherViewController: UICollectionViewDataSource {
             return cellHours
         } else {
             let cellDays = collectionViewWeatherDays.dequeueReusableCell(withReuseIdentifier: collectionViewDaysIdentifier, for: indexPath) as! WeatherDaysCollectionViewCell
-            cellDays.labelDay.text = "O meu deus"
+            cellDays.labelDay.text = "Wednesday"
             return cellDays
         }
     }
@@ -164,7 +164,7 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: widthCell, height: 100)
         } else {
             let widthCell = collectionView.bounds.width
-            return CGSize(width: widthCell, height: 50)
+            return CGSize(width: widthCell, height: 40)
         }
     }
 }
