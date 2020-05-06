@@ -52,6 +52,14 @@ class WeatherViewController: UIViewController {
     func convertToCelsius(t: Int) -> Int{
         return t - 273
     }
+    
+    func weekDayNameBy(stringDate: String) -> String {
+        let df  = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = df.date(from: stringDate)!
+        df.dateFormat = "EEEE"
+        return df.string(from: date);
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -134,7 +142,7 @@ extension WeatherViewController: UICollectionViewDataSource {
         if collectionView == collectionViewWeatherHour {
             return weatherDayModel.count
         } else {
-            return 6
+            return weatherDayModel.count
         }
     }
     
@@ -144,16 +152,26 @@ extension WeatherViewController: UICollectionViewDataSource {
             let cellHours = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: collectionViewHoursIdentifier, for: indexPath) as! WeatherHourCollectionViewCell
             let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
             cellHours.imageViewWeatherHour.image = UIImage(systemName: conditionName)
-            let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
-            cellHours.tempMax.text = "\(tempMax)"
-            let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
-            cellHours.tempMin.text = "\(tempMin)"
+//            let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
+            cellHours.tempMax.text = "\(weatherDayModel[indexPath.item].temp)"
+//            let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
+            print(weatherDayModel[indexPath.item].dt_txt)
+            cellHours.tempMin.text = "Hour"
             return cellHours
-        } else {
+        }
+        if collectionView == collectionViewWeatherDays {
             let cellDays = collectionViewWeatherDays.dequeueReusableCell(withReuseIdentifier: collectionViewDaysIdentifier, for: indexPath) as! WeatherDaysCollectionViewCell
-            cellDays.labelDay.text = "Wednesday"
+            print(weatherDayModel[indexPath.item].dt_txt)
+            let day = weatherDayModel[indexPath.item].dt_txt
+            let weekday = weekDayNameBy(stringDate: day)
+            cellDays.labelDay.text = weekday
+            cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_max)"
+            cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_min)"
+            let imageName = weatherDayModel[indexPath.item].conditionName
+            cellDays.imageViewWeatherDay.image = UIImage(systemName: imageName)
             return cellDays
         }
+        return UICollectionViewCell()
     }
 }
 
@@ -169,6 +187,6 @@ extension WeatherViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension WeatherViewController: UITableViewDelegate {
-    
+extension Date {
+   
 }

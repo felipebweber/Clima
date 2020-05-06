@@ -21,6 +21,7 @@ extension WeatherDayDataResponse {
     struct List: Codable {
         let dt: Int
         let main: Main
+        let dt_txt: String
         let weather: [Weather]
     }
     
@@ -37,3 +38,7 @@ extension WeatherDayDataResponse {
         let icon: String
     }
 }
+//list[0].main.temp
+//list[0].main.temp_min
+//list[0].weather[0].id
+//list[0].dt_txt

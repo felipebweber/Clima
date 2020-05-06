@@ -18,7 +18,9 @@ protocol WeatherManagerDelegate: class {
 final class WeatherManager {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=dc05b8287f28b9113a9f84641e77bff5&units=metric"
     
-    let weatherURLDays = "https://samples.openweathermap.org/data/2.5/forecast/hourly?id=3451138&appid=439d4b804bc8187953eb36d2a8c26a02#"
+//    let weatherURLDays = "https://samples.openweathermap.org/data/2.5/forecast/hourly?id=3451138&appid=439d4b804bc8187953eb36d2a8c26a02#"
+    let weatherURLDays = "https://api.openweathermap.org/data/2.5/forecast?id=3451138&appid=dc05b8287f28b9113a9f84641e77bff5&units=metric"
+    
     
     weak var delegate: WeatherManagerDelegate?
     
@@ -26,20 +28,23 @@ final class WeatherManager {
         // essa linha eh para quando for fazer buscas com nome composto de cidade fazer a concatenacao de %20
         if let cityEncoded = cityName.addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[]{} ").inverted){
             let urlString = "\(weatherURL)&q=\(cityEncoded)"
+            let urlStringDay = "\(weatherURLDays)&q=\(cityEncoded)"
             print(urlString)
+            print(urlStringDay)
             performRequest(with: urlString)
-            fetchWeatherDay()
+            performRequestDay(with: urlStringDay)
         }
     }
     
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
+        let urlStringDay = "\(weatherURLDays)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: urlString)
-        fetchWeatherDay()
+        fetchWeatherDay(urlDay: urlStringDay)
     }
     
-    func fetchWeatherDay() {
-        performRequestDay(with: weatherURLDays)
+    func fetchWeatherDay(urlDay: String) {
+        performRequestDay(with: urlDay)
     }
     
     //perform = executar
@@ -90,7 +95,8 @@ final class WeatherManager {
         var weatherDayModel = [WeatherDayModel]()
         if let decodeData = try? decoder.decode(WeatherDayDataResponse.self, from: weatherData) {
             for dd in decodeData.list {
-                let app = WeatherDayModel(id: dd.weather[0].id, temp_min: Int(dd.main.temp_min), temp_max: Int(dd.main.temp_max), cityName: decodeData.city.name)
+                guard let id = dd.weather.first?.id else { return [] }
+                let app = WeatherDayModel(id: id, temp_min: Int(dd.main.temp_min), temp_max: Int(dd.main.temp_max), temp: Int(dd.main.temp), cityName: decodeData.city.name, dt_txt: dd.dt_txt)
                 weatherDayModel.append(app)
             }
         }
@@ -102,7 +108,7 @@ final class WeatherManager {
         guard let decodeData = try? decoder.decode(WeatherDataResponse.self, from: weatherData) else { return nil }
         let name = decodeData.name
         let temp = decodeData.main.temp
-        let id = decodeData.weather[0].id
+        guard let id = decodeData.weather.first?.id else { return nil }
         let weather = WeatherModel(conditionId: id, cityName: name, temperature: temp)
         return weather
     }
