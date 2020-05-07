@@ -60,6 +60,18 @@ class WeatherViewController: UIViewController {
         df.dateFormat = "EEEE"
         return df.string(from: date);
     }
+    
+    func getHour(stringDate: String) -> String {
+        let df  = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = df.date(from: stringDate)!
+        df.dateFormat = "HH"
+        return df.string(from: date);
+    }
+    func hourToInt(hour: String) -> Int {
+        guard let hourInt = Int(hour) else { return 15}
+        return hourInt
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -104,7 +116,6 @@ extension WeatherViewController: UITextFieldDelegate{
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
         if let city = searchTextField.text{
             weatherManager.fetchWeather(cityName: city)
         }
@@ -150,13 +161,23 @@ extension WeatherViewController: UICollectionViewDataSource {
         
         if collectionView == collectionViewWeatherHour {
             let cellHours = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: collectionViewHoursIdentifier, for: indexPath) as! WeatherHourCollectionViewCell
-            let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
-            cellHours.imageViewWeatherHour.image = UIImage(systemName: conditionName)
+//            let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
+            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
+            let hourInt = hourToInt(hour: hour)
+            var imageName = ""
+            if hourInt > 18 || hourInt < 6 {
+                imageName = "moon.stars"
+            } else {
+                imageName = weatherDayModel[indexPath.item].conditionName
+            }
+            
+            cellHours.imageViewWeatherHour.image = UIImage(systemName: imageName)
 //            let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
             cellHours.tempMax.text = "\(weatherDayModel[indexPath.item].temp)"
 //            let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
             print(weatherDayModel[indexPath.item].dt_txt)
-            cellHours.tempMin.text = "Hour"
+//            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
+            cellHours.hour.text = hour
             return cellHours
         }
         if collectionView == collectionViewWeatherDays {
@@ -164,11 +185,29 @@ extension WeatherViewController: UICollectionViewDataSource {
             print(weatherDayModel[indexPath.item].dt_txt)
             let day = weatherDayModel[indexPath.item].dt_txt
             let weekday = weekDayNameBy(stringDate: day)
-            cellDays.labelDay.text = weekday
-            cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_max)"
-            cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_min)"
-            let imageName = weatherDayModel[indexPath.item].conditionName
-            cellDays.imageViewWeatherDay.image = UIImage(systemName: imageName)
+            
+            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
+            let hourInt = hourToInt(hour: hour)
+            
+            // isso não funciona :(
+            if hourInt == 0 {
+                print("Hour: \(hourInt)")
+                print("Day: \(weekday)")
+                cellDays.labelDay.text = weekday
+                cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_max)"
+                cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_min)"
+                
+                var imageName = ""
+                if hourInt > 18 || hourInt < 6 {
+                    imageName = "moon.stars"
+                } else {
+                    imageName = weatherDayModel[indexPath.item].conditionName
+                }
+                
+                cellDays.imageViewWeatherDay.image = UIImage(systemName: imageName)
+            }
+            
+            
             return cellDays
         }
         return UICollectionViewCell()
