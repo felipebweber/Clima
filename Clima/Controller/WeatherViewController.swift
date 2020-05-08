@@ -27,6 +27,8 @@ class WeatherViewController: UIViewController {
     var weatherManager = WeatherManager()
     let locationManager = CLLocationManager()
     var weatherDayModel = Array<WeatherDayModel>()
+    var tempWeatherHour = [WeatherDayModel]()
+    var tempWeatherDay = [WeatherDayModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +63,14 @@ class WeatherViewController: UIViewController {
         return df.string(from: date);
     }
     
+    func weekDayNumber(stringDate: String) -> String {
+        let df  = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = df.date(from: stringDate)!
+        df.dateFormat = "dd"
+        return df.string(from: date);
+    }
+    
     func getHour(stringDate: String) -> String {
         let df  = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -68,10 +78,61 @@ class WeatherViewController: UIViewController {
         df.dateFormat = "HH"
         return df.string(from: date);
     }
+    
     func hourToInt(hour: String) -> Int {
-        guard let hourInt = Int(hour) else { return 15}
+        guard let hourInt = Int(hour) else { return 15 }
         return hourInt
     }
+    
+    func hourNow() -> Int {
+        let date = Date()
+        let calendar = Calendar.current
+        return calendar.component(.hour, from: date)
+    }
+    
+    func dateLocal() -> Int {
+        let date = Date()
+        let calendar = Calendar.current
+        return calendar.component(.day, from: date)
+    }
+    
+    func weatherDayByHourNow(weatherDay: Array<WeatherDayModel>) {
+        for weather in weatherDay {
+//            let hour = getHour(stringDate: weather.dt_txt)
+            let dayServer = weekDayNumber(stringDate: weather.dt_txt)
+            guard let dayS = Int(dayServer) else { return }
+            let dayLocal = dateLocal()
+            if dayS == dayLocal {
+//                print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+                let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
+                tempWeatherHour.append(app)
+            }
+            if dayS == dayLocal+1 {
+//                print("Dia proximo: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+                let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
+                tempWeatherHour.append(app)
+            }
+        }
+    }
+    
+    
+    func weatherDayByDay(weatherDay: Array<WeatherDayModel>) {
+        var dayLocal = dateLocal()
+            for weather in weatherDay {
+                let hour = getHour(stringDate: weather.dt_txt)
+                let dayServer = weekDayNumber(stringDate: weather.dt_txt)
+                guard let dayS = Int(dayServer) else { return }
+                
+                if dayS == dayLocal+1 {
+                    print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+                    let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
+                    dayLocal = dayLocal + 1
+                    tempWeatherDay.append(app)
+                }
+            }
+        print("Tamanho do array: \(tempWeatherDay.count)")
+        }
+    
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -92,7 +153,6 @@ extension WeatherViewController: CLLocationManagerDelegate {
 }
 
 //MARK: - UITextFieldDelegate
-
 extension WeatherViewController: UITextFieldDelegate{
     
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -129,6 +189,10 @@ extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateDayWeather(weatherDay: [WeatherDayModel]) {
         DispatchQueue.main.async {
             self.weatherDayModel = weatherDay
+            self.tempWeatherDay = []
+            self.weatherDayByHourNow(weatherDay: weatherDay)
+            self.tempWeatherDay = []
+            self.weatherDayByDay(weatherDay: weatherDay)
             self.collectionViewWeatherHour.reloadData()
             self.collectionViewWeatherDays.reloadData()
         }
@@ -151,9 +215,9 @@ extension WeatherViewController: WeatherManagerDelegate {
 extension WeatherViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == collectionViewWeatherHour {
-            return weatherDayModel.count
+            return tempWeatherHour.count
         } else {
-            return weatherDayModel.count
+            return tempWeatherDay.count
         }
     }
     
@@ -162,31 +226,32 @@ extension WeatherViewController: UICollectionViewDataSource {
         if collectionView == collectionViewWeatherHour {
             let cellHours = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: collectionViewHoursIdentifier, for: indexPath) as! WeatherHourCollectionViewCell
 //            let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
-            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
+            let hour = getHour(stringDate: tempWeatherHour[indexPath.item].dt_txt)
             let hourInt = hourToInt(hour: hour)
             var imageName = ""
             if hourInt > 18 || hourInt < 6 {
                 imageName = "moon.stars"
             } else {
-                imageName = weatherDayModel[indexPath.item].conditionName
+                imageName = tempWeatherHour[indexPath.item].conditionName
             }
             
             cellHours.imageViewWeatherHour.image = UIImage(systemName: imageName)
 //            let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
-            cellHours.tempMax.text = "\(weatherDayModel[indexPath.item].temp)"
+            cellHours.tempMax.text = "\(tempWeatherHour[indexPath.item].temp)"
 //            let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
-            print(weatherDayModel[indexPath.item].dt_txt)
+            print(tempWeatherHour[indexPath.item].dt_txt)
 //            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
             cellHours.hour.text = hour
             return cellHours
         }
+        
         if collectionView == collectionViewWeatherDays {
             let cellDays = collectionViewWeatherDays.dequeueReusableCell(withReuseIdentifier: collectionViewDaysIdentifier, for: indexPath) as! WeatherDaysCollectionViewCell
-            print(weatherDayModel[indexPath.item].dt_txt)
-            let day = weatherDayModel[indexPath.item].dt_txt
+            print(tempWeatherDay[indexPath.item].dt_txt)
+            let day = tempWeatherDay[indexPath.item].dt_txt
             let weekday = weekDayNameBy(stringDate: day)
             
-            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
+            let hour = getHour(stringDate: tempWeatherDay[indexPath.item].dt_txt)
             let hourInt = hourToInt(hour: hour)
             
             // isso não funciona :(
@@ -194,14 +259,14 @@ extension WeatherViewController: UICollectionViewDataSource {
                 print("Hour: \(hourInt)")
                 print("Day: \(weekday)")
                 cellDays.labelDay.text = weekday
-                cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_max)"
-                cellDays.labelTempMin.text = "\(weatherDayModel[indexPath.item].temp_min)"
+                cellDays.labelTempMin.text = "\(tempWeatherDay[indexPath.item].temp_max)"
+                cellDays.labelTempMin.text = "\(tempWeatherDay[indexPath.item].temp_min)"
                 
                 var imageName = ""
                 if hourInt > 18 || hourInt < 6 {
                     imageName = "moon.stars"
                 } else {
-                    imageName = weatherDayModel[indexPath.item].conditionName
+                    imageName = tempWeatherDay[indexPath.item].conditionName
                 }
                 
                 cellDays.imageViewWeatherDay.image = UIImage(systemName: imageName)

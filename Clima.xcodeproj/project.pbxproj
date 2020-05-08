@@ -65,7 +65,7 @@
 		5534431F2409A585002BDE90 /* ClimaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClimaUITests.swift; sourceTree = "<group>"; };
 		553443212409A585002BDE90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5534432D2409A801002BDE90 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		553443322409E629002BDE90 /* dark_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = dark_background.pdf; path = Clima/dark_background.pdf; sourceTree = SOURCE_ROOT; };
+		553443322409E629002BDE90 /* dark_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = dark_background.pdf; path = ClimaUITests/dark_background.pdf; sourceTree = SOURCE_ROOT; };
 		553443332409E629002BDE90 /* light_background.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = light_background.pdf; path = Clima/light_background.pdf; sourceTree = SOURCE_ROOT; };
 		5593879C2450EF3900C7E55F /* WeatherDayDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDayDataResponse.swift; sourceTree = "<group>"; };
 		55BC007F2458FCFE00A9915A /* WeatherDaysCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDaysCollectionViewCell.swift; sourceTree = "<group>"; };
