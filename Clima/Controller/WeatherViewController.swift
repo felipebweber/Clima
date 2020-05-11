@@ -153,7 +153,7 @@ extension WeatherViewController: CLLocationManagerDelegate {
 }
 
 //MARK: - UITextFieldDelegate
-extension WeatherViewController: UITextFieldDelegate{
+extension WeatherViewController: UITextFieldDelegate {
     
     @IBAction func searchPressed(_ sender: UIButton) {
         searchTextField.endEditing(true) // to hilde keyboard
@@ -167,16 +167,16 @@ extension WeatherViewController: UITextFieldDelegate{
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if textField.text! != ""{
+        if textField.text! != "" {
             return true
-        }else{
+        } else {
             textField.placeholder = "Type something"
             return false
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let city = searchTextField.text{
+        if let city = searchTextField.text {
             weatherManager.fetchWeather(cityName: city)
         }
         searchTextField.text = ""
@@ -198,7 +198,7 @@ extension WeatherViewController: WeatherManagerDelegate {
         }
     }
     
-    func didUpdateWeather(weather: WeatherModel){
+    func didUpdateWeather(weather: WeatherModel) {
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
             self.cityLabel.text = weather.cityName
