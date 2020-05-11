@@ -74,7 +74,9 @@ class WeatherViewController: UIViewController {
     func getHour(stringDate: String) -> String {
         let df  = DateFormatter()
         df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        df.timeZone = TimeZone(abbreviation: "UTC")
         let date = df.date(from: stringDate)!
+        df.timeZone = TimeZone.current
         df.dateFormat = "HH"
         return df.string(from: date);
     }
@@ -99,11 +101,15 @@ class WeatherViewController: UIViewController {
     func weatherDayByHourNow(weatherDay: Array<WeatherDayModel>) {
         for weather in weatherDay {
 //            let hour = getHour(stringDate: weather.dt_txt)
+//            let hourLocal = hourNow()
             let dayServer = weekDayNumber(stringDate: weather.dt_txt)
             guard let dayS = Int(dayServer) else { return }
+//            guard let hourS = Int(hour) else { return }
             let dayLocal = dateLocal()
             if dayS == dayLocal {
-//                print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+//                if hourS > hourLocal {
+//                    print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+//                }
                 let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
                 tempWeatherHour.append(app)
             }
@@ -254,24 +260,22 @@ extension WeatherViewController: UICollectionViewDataSource {
             let hour = getHour(stringDate: tempWeatherDay[indexPath.item].dt_txt)
             let hourInt = hourToInt(hour: hour)
             
-            // isso não funciona :(
-            if hourInt == 0 {
-                print("Hour: \(hourInt)")
-                print("Day: \(weekday)")
-                cellDays.labelDay.text = weekday
-                cellDays.labelTempMin.text = "\(tempWeatherDay[indexPath.item].temp_max)"
-                cellDays.labelTempMin.text = "\(tempWeatherDay[indexPath.item].temp_min)"
-                
-                var imageName = ""
-                if hourInt > 18 || hourInt < 6 {
-                    imageName = "moon.stars"
-                } else {
-                    imageName = tempWeatherDay[indexPath.item].conditionName
-                }
-                
-                cellDays.imageViewWeatherDay.image = UIImage(systemName: imageName)
+            
+            print("Hour: \(hourInt)")
+            print("Day: \(weekday)")
+            cellDays.labelDay.text = weekday
+            cellDays.labelTempMin.text = "\(tempWeatherDay[indexPath.item].temp_min)"
+            print("\n Temp \(tempWeatherDay[indexPath.item].temp_max)")
+            cellDays.labelTempMax.text = "\(tempWeatherDay[indexPath.item].temp_max)"
+            print("\n Temp maxima \(tempWeatherDay[indexPath.item].temp_min)")
+            var imageName = ""
+            if hourInt > 18 || hourInt < 6 {
+                imageName = "moon.stars"
+            } else {
+                imageName = tempWeatherDay[indexPath.item].conditionName
             }
             
+            cellDays.imageViewWeatherDay.image = UIImage(systemName: imageName)
             
             return cellDays
         }
