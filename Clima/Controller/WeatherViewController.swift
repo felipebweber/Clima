@@ -100,21 +100,14 @@ class WeatherViewController: UIViewController {
     
     func weatherDayByHourNow(weatherDay: Array<WeatherDayModel>) {
         for weather in weatherDay {
-//            let hour = getHour(stringDate: weather.dt_txt)
-//            let hourLocal = hourNow()
             let dayServer = weekDayNumber(stringDate: weather.dt_txt)
             guard let dayS = Int(dayServer) else { return }
-//            guard let hourS = Int(hour) else { return }
             let dayLocal = dateLocal()
             if dayS == dayLocal {
-//                if hourS > hourLocal {
-//                    print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
-//                }
                 let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
                 tempWeatherHour.append(app)
             }
             if dayS == dayLocal+1 {
-//                print("Dia proximo: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
                 let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
                 tempWeatherHour.append(app)
             }
@@ -124,21 +117,22 @@ class WeatherViewController: UIViewController {
     
     func weatherDayByDay(weatherDay: Array<WeatherDayModel>) {
         var dayLocal = dateLocal()
-            for weather in weatherDay {
-                let hour = getHour(stringDate: weather.dt_txt)
-                let dayServer = weekDayNumber(stringDate: weather.dt_txt)
-                guard let dayS = Int(dayServer) else { return }
-                
-                if dayS == dayLocal+1 {
-                    print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+        for weather in weatherDay {
+            let hour = getHour(stringDate: weather.dt_txt)
+            guard let hourS = Int(hour) else { return }
+            let dayServer = weekDayNumber(stringDate: weather.dt_txt)
+            guard let dayS = Int(dayServer) else { return }
+            
+            if dayS == dayLocal+1 {
+                print("Dia: \(dayServer), Hour: \(hour), Temp: \(weather.temp)")
+                if hourS == 9 {
                     let app = WeatherDayModel(id: weather.id, temp_min: weather.temp_min, temp_max: weather.temp_max, temp: weather.temp, cityName: weather.cityName, dt_txt: weather.dt_txt)
                     dayLocal = dayLocal + 1
                     tempWeatherDay.append(app)
                 }
             }
-        print("Tamanho do array: \(tempWeatherDay.count)")
         }
-    
+    }
 }
 
 //MARK: - CLLocationManagerDelegate
@@ -195,7 +189,7 @@ extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateDayWeather(weatherDay: [WeatherDayModel]) {
         DispatchQueue.main.async {
             self.weatherDayModel = weatherDay
-            self.tempWeatherDay = []
+            self.tempWeatherHour = []
             self.weatherDayByHourNow(weatherDay: weatherDay)
             self.tempWeatherDay = []
             self.weatherDayByDay(weatherDay: weatherDay)
@@ -231,7 +225,6 @@ extension WeatherViewController: UICollectionViewDataSource {
         
         if collectionView == collectionViewWeatherHour {
             let cellHours = collectionViewWeatherHour.dequeueReusableCell(withReuseIdentifier: collectionViewHoursIdentifier, for: indexPath) as! WeatherHourCollectionViewCell
-//            let conditionName = "\(weatherDayModel[indexPath.item].conditionName)"
             let hour = getHour(stringDate: tempWeatherHour[indexPath.item].dt_txt)
             let hourInt = hourToInt(hour: hour)
             var imageName = ""
@@ -242,11 +235,7 @@ extension WeatherViewController: UICollectionViewDataSource {
             }
             
             cellHours.imageViewWeatherHour.image = UIImage(systemName: imageName)
-//            let tempMax = convertToCelsius(t: weatherDayModel[indexPath.item].temp_max)
             cellHours.tempMax.text = "\(tempWeatherHour[indexPath.item].temp)"
-//            let tempMin = convertToCelsius(t: weatherDayModel[indexPath.item].temp_min)
-            print(tempWeatherHour[indexPath.item].dt_txt)
-//            let hour = getHour(stringDate: weatherDayModel[indexPath.item].dt_txt)
             cellHours.hour.text = hour
             return cellHours
         }
@@ -260,14 +249,9 @@ extension WeatherViewController: UICollectionViewDataSource {
             let hour = getHour(stringDate: tempWeatherDay[indexPath.item].dt_txt)
             let hourInt = hourToInt(hour: hour)
             
-            
-            print("Hour: \(hourInt)")
-            print("Day: \(weekday)")
             cellDays.labelDay.text = weekday
             cellDays.labelTempMin.text = "\(tempWeatherDay[indexPath.item].temp_min)"
-            print("\n Temp \(tempWeatherDay[indexPath.item].temp_max)")
             cellDays.labelTempMax.text = "\(tempWeatherDay[indexPath.item].temp_max)"
-            print("\n Temp maxima \(tempWeatherDay[indexPath.item].temp_min)")
             var imageName = ""
             if hourInt > 18 || hourInt < 6 {
                 imageName = "moon.stars"
