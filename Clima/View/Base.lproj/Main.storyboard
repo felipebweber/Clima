@@ -189,7 +189,7 @@
                                         <rect key="frame" x="0.0" y="386" width="335" height="235"/>
                                         <subviews>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JG7-2t-sAU">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="235"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="335" height="227"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fjM-qV-7q4">
@@ -262,9 +262,8 @@
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="trailing" secondItem="XLS-05-Nlx" secondAttribute="trailing" id="NHS-HI-9Te"/>
-                                                                        <constraint firstItem="XLS-05-Nlx" firstAttribute="leading" secondItem="bNv-ht-Xei" secondAttribute="leading" id="roN-fB-V8n"/>
-                                                                        <constraint firstItem="XLS-05-Nlx" firstAttribute="top" secondItem="bNv-ht-Xei" secondAttribute="top" id="xFN-iX-yOG"/>
+                                                                        <constraint firstItem="XLS-05-Nlx" firstAttribute="top" secondItem="bNv-ht-Xei" secondAttribute="top" id="ApL-3w-NAu"/>
+                                                                        <constraint firstItem="XLS-05-Nlx" firstAttribute="centerX" secondItem="bNv-ht-Xei" secondAttribute="centerX" id="WR3-1M-Ef9"/>
                                                                     </constraints>
                                                                 </collectionViewCellContentView>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -283,17 +282,17 @@
                                                         </connections>
                                                     </collectionView>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="nJZ-Dv-ptZ" firstAttribute="bottom" secondItem="fjM-qV-7q4" secondAttribute="bottom" id="EHi-jX-9gN"/>
-                                                    <constraint firstItem="fjM-qV-7q4" firstAttribute="top" secondItem="nJZ-Dv-ptZ" secondAttribute="top" id="KSo-V4-dj2"/>
-                                                    <constraint firstItem="fjM-qV-7q4" firstAttribute="trailing" secondItem="nJZ-Dv-ptZ" secondAttribute="trailing" id="L2e-IC-jnE"/>
-                                                    <constraint firstItem="fjM-qV-7q4" firstAttribute="leading" secondItem="nJZ-Dv-ptZ" secondAttribute="leading" id="QXC-Ib-Gbs"/>
-                                                </constraints>
                                                 <viewLayoutGuide key="contentLayoutGuide" id="Qfp-Cw-jCg"/>
                                                 <viewLayoutGuide key="frameLayoutGuide" id="nJZ-Dv-ptZ"/>
                                             </scrollView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="fjM-qV-7q4" firstAttribute="top" secondItem="lQu-YF-qs0" secondAttribute="top" id="9NT-K9-ryj"/>
+                                            <constraint firstAttribute="bottom" secondItem="fjM-qV-7q4" secondAttribute="bottom" id="EON-Ka-nv2"/>
+                                            <constraint firstItem="fjM-qV-7q4" firstAttribute="leading" secondItem="lQu-YF-qs0" secondAttribute="leading" id="JRZ-zu-gDf"/>
+                                            <constraint firstAttribute="trailing" secondItem="fjM-qV-7q4" secondAttribute="trailing" id="jw9-9K-ktz"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -310,9 +309,9 @@
                             </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="c20-dK-6zZ" secondAttribute="bottom" id="Ap0-X7-rNY"/>
                             <constraint firstItem="c20-dK-6zZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="DcX-my-wsp"/>
-                            <constraint firstItem="c20-dK-6zZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FBW-1z-j9u"/>
-                            <constraint firstItem="c20-dK-6zZ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="GBE-Jv-uOI"/>
+                            <constraint firstItem="c20-dK-6zZ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="FWY-N4-MSU"/>
                             <constraint firstAttribute="trailing" secondItem="tO9-em-Xr3" secondAttribute="trailing" constant="20" id="McH-Hn-Pxr"/>
                             <constraint firstItem="tO9-em-Xr3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Mht-Xl-l7T"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tO9-em-Xr3" secondAttribute="bottom" constant="6" id="jQt-08-1HP"/>
@@ -332,7 +331,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="130.40000000000001" y="138.0809595202399"/>
+            <point key="canvasLocation" x="127.2" y="136.28185907046478"/>
         </scene>
     </scenes>
     <resources>
